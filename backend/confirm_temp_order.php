@@ -1,0 +1,26 @@
+<?php
+include 'conn.php';
+
+$id = $_REQUEST['order_id'];
+$date = date('Y-m-d');
+
+
+  $sqlDeleteAd= "UPDATE tbl_order_temp
+SET status = 2
+WHERE order_ref='$id'";
+  $rsDelAd = $conn->query($sqlDeleteAd);
+
+  $sqlDeleteAd= "UPDATE tbl_order_customer
+SET status = 2, date_confirmed_added = '$date'
+WHERE order_id='$id'";
+  $rsDelAd = $conn->query($sqlDeleteAd);
+
+  if ($rsDelAd > 0) {
+    $_SESSION['suc_ad_del'] = true;
+    echo json_encode(array("statusCode"=>200));
+    exit();
+  }
+
+
+
+ ?>
